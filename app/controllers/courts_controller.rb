@@ -4,11 +4,12 @@ class CourtsController < ApplicationController
   
   def index
     @court = Court.all
-    if params[:date].present? && parms[:time].present?
+    debugger
+    if params[:date].present? && params[:time].present?
       date = DateTime.parse("#{params[:date]} #{params[:time]}")
 
       #retrieve the courts which are available for a specific date and time
-      @courts = @courts.joins(:reservations).where("reservations.start_time >= ? && reservations.end_time < ?", date, date+1.hour).group("courts.id").having("count(reservations.id)=0")
+      @courts = @court.joins(:reservations).where("reservations.start_time >= ? and reservations.start_time < ?", date, date+1.hour).group("courts.id").having("count(reservations.id)=0")
     end
     render json: @courts
   end

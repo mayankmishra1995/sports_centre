@@ -9,6 +9,22 @@ class ReservationsController < ApplicationController
     else
       render json: @reservation.errors, status: :unprocessable_entity
     end
+
+    #To define the payload 
+
+    # court_type = params[:court_type]
+    # date = params[:date]
+    # time = params[:time]
+    # notes = params[:notes]
+
+    #response
+    # {
+    # "court_type": "Tennis",
+    # "date": "2022-06-01",
+    # "time": "12:00",
+    # "notes": "Single hour booking"
+    # }
+
   end
 
   def update
@@ -30,7 +46,7 @@ class ReservationsController < ApplicationController
       @reservation = Reservation.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
+    # Only allow a list of trusted parameters through.(strong params)
     def reservation_params
       params.require(:reservation).permit(:court_id, :start_time, :end_time, :notes)
     end
